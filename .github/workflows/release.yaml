@@ -1,0 +1,36 @@
+name: Release
+
+# Trigger on merge to main
+on:
+  release:
+    types: [published]
+
+# Job Definition
+jobs:
+  Release:
+    # run mvn package for ubuntu
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+          dotnet-quality: 'validated'
+
+      - name: Build .NET Application
+        run: dotnet build rest_api_template
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: .\bin\Release\rest_api_template.1.0.0.nupkg
+          asset_name: RestAPI.nupkg
+          asset_content_type: application/octet-stream
