@@ -1,12 +1,12 @@
 using Microsoft.EntityFrameworkCore;
-using rest_api_template.Models;
+using Tricentis.Rest_API_Template.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<DemoContext>(opt => 
+builder.Services.AddDbContext<DemoContext>(opt =>
     opt.UseInMemoryDatabase("DemoItems"));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

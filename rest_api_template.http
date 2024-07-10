@@ -1,6 +1,0 @@
-@rest_api_template_HostAddress = http://localhost:5278
-
-GET {{rest_api_template_HostAddress}}/demo/
-Accept: application/json
-
-###

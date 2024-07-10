@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tricentis.Rest-API-Template", "src\Tricentis.Rest-API-Template.csproj", "{63872E70-110F-45FC-83EB-0227827D6749}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tricentis.Rest-API-Template.Tests", "test\Tricentis.Rest-API-Template.Tests.csproj", "{397AC693-6065-43EC-85FF-5B5283D2778C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2B430346-804E-4B20-B62F-3B52970CFA9C}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+		sonar-project.properties = sonar-project.properties
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{59F469D9-E9BB-4478-B955-8DF9C8889014}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{95884965-6ECE-4D45-A306-1ABF3216297F}"
+	ProjectSection(SolutionItems) = preProject
+		pull_request.yaml = pull_request.yaml
+		release.yaml = release.yaml
+		sonarqube.yaml = sonarqube.yaml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{63872E70-110F-45FC-83EB-0227827D6749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63872E70-110F-45FC-83EB-0227827D6749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63872E70-110F-45FC-83EB-0227827D6749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63872E70-110F-45FC-83EB-0227827D6749}.Release|Any CPU.Build.0 = Release|Any CPU
+		{397AC693-6065-43EC-85FF-5B5283D2778C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{397AC693-6065-43EC-85FF-5B5283D2778C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{397AC693-6065-43EC-85FF-5B5283D2778C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{397AC693-6065-43EC-85FF-5B5283D2778C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{59F469D9-E9BB-4478-B955-8DF9C8889014} = {2B430346-804E-4B20-B62F-3B52970CFA9C}
+		{95884965-6ECE-4D45-A306-1ABF3216297F} = {59F469D9-E9BB-4478-B955-8DF9C8889014}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D2283161-930F-4491-8513-9825B9C88EB7}
+	EndGlobalSection
+EndGlobal
