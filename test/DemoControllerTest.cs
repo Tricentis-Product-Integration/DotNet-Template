@@ -1,14 +1,16 @@
-using Tricentis.Rest_API_Template.Controllers;
-using Tricentis.Rest_API_Template.Models;
-using Moq;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Moq;
+using Tricentis.RestApiTemplate.Controllers;
+using Tricentis.RestApiTemplate.Models;
 
-namespace Tests;
+namespace Tricentis.Rest_API_Template.Tests;
 
 [TestFixture]
 public class DemoControllerTest
 {
-    private Mock<IDemoRepository> demoRepositoryMock = new();
+    private readonly Mock<IDemoRepository> demoRepositoryMock = new();
+    private readonly Mock<ILogger<DemoController>> loggerMock = new();
 
     [SetUp]
     public void SetUp()
@@ -19,17 +21,10 @@ public class DemoControllerTest
     }
 
     [TestCase(1, "Test1")]
+    [TestCase(2, "Test2")]
     public void Test_GetItemByID_Pass1(int id, string expectedValue)
     {
-        var controller = new DemoController(demoRepositoryMock.Object);
-
-        controller.GetDemo(id).DemoValue.Should().Be(expectedValue);
-    }
-
-    [TestCase(2, "Test2")]
-    public void Test_GetItemByID_Pass2(int id, string expectedValue)
-    {
-        var controller = new DemoController(demoRepositoryMock.Object);
+        var controller = new DemoController(demoRepositoryMock.Object, loggerMock.Object);
 
         controller.GetDemo(id).DemoValue.Should().Be(expectedValue);
     }
@@ -37,7 +32,7 @@ public class DemoControllerTest
     [TestCase(0)]
     public void Test_GetItemByID_NoIDFound(int id)
     {
-        var controller = new DemoController(demoRepositoryMock.Object);
+        var controller = new DemoController(demoRepositoryMock.Object, loggerMock.Object);
         Action fail = () => controller.GetDemo(id);
 
         fail.Should().Throw<HttpRequestException>();
@@ -46,7 +41,7 @@ public class DemoControllerTest
     [Test]
     public void Test_GetItems_IsNotNull_Pass()
     {
-        var controller = new DemoController(demoRepositoryMock.Object);
+        var controller = new DemoController(demoRepositoryMock.Object, loggerMock.Object);
 
         controller.GetDemos().Count.Should().Be(2);
     }

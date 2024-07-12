@@ -8,7 +8,7 @@ on:
 # Job Definition
 jobs:
   Release:
-    # run mvn package for ubuntu
+    # publish nuget package
 
     runs-on: ubuntu-latest
 
@@ -19,18 +19,14 @@ jobs:
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
-          dotnet-quality: 'ga'
+          global-json-file: global.json
 
-      - name: Build .NET Application
-        run: dotnet build .\Tricentis.Rest-API-Template.sln
+      - name: Package .NET Application
+        run: dotnet pack .\Tricentis.Rest-API-Template.sln
 
       - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: Shopify/upload-to-release@v1
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: .\bin\Release\rest_api_template.1.0.0.nupkg
-          asset_name: RestAPI.nupkg
-          asset_content_type: application/octet-stream
+          name: Rest-API.nupkg
+          path: .\src\bin\Release\Tricentis.Rest-API-Template.1.0.0.nupkg
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

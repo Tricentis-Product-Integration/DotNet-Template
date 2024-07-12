@@ -1,45 +1,75 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Tricentis.Rest_API_Template.Models;
+using Tricentis.RestApiTemplate.Models;
 
-namespace Tricentis.Rest_API_Template.Controllers;
+namespace Tricentis.RestApiTemplate.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 public class DemoController : ControllerBase
 {
     private readonly IDemoRepository _demoRepository;
+    private readonly ILogger<DemoController> _logger;
 
-    public DemoController(IDemoRepository demoRepository)
+    public DemoController(IDemoRepository demoRepository, ILogger<DemoController> logger)
     {
         _demoRepository = demoRepository;
+        _logger = logger;
     }
 
     [HttpGet(Name = "GetDemoValues")]
-    public IList<DemoItem> GetDemos()
-    {
-        if (_demoRepository.GetDemoItems() == null)
+    public IList<DemoItem> GetDemos() { 
+
+        IList<DemoItem>? items = _demoRepository.GetDemoItems();
+
+        if (items == null)
         {
-            throw new HttpRequestException("DemoItems is Empty");
+            _logger.LogError("DemoItems is empty or does not exist");
+            throw new HttpRequestException("DemoItems is empty or does not exist");
         }
 
-        return _demoRepository.GetDemoItems();
+        return items;
     }
 
-    [HttpGet("{Id}")]
+    [HttpGet("{id}")]
     public DemoItem GetDemo(int id)
     {
-        if (_demoRepository.GetDemoItems() == null)
-        {
-            throw new HttpRequestException("DemoItems is Empty");
+        var demoItem = _demoRepository.GetDemoItemById(id);
+
+        if (demoItem == null)
+        {   
+           _logger.LogError("DemoItem with this ID does not Exist");
+            throw new HttpRequestException("DemoItem with this ID does not Exist");
         }
 
+        return demoItem;
+    }
+
+    [HttpPost]
+    public void PostDemo(int id, string value) { 
+        var demoItem = new DemoItem { Id = id, DemoValue = value };
+
+        _demoRepository.AddDemoItem(demoItem);
+    }
+
+    [HttpPut]
+    public void PutDemo(int id, string value)
+    {
+        var demoItem = new DemoItem { Id = id, DemoValue = value };
+
+        _demoRepository.UpdateDemoItem(demoItem);
+    }
+
+    [HttpDelete("{id}")]
+    public void DeleteDemo(int id)
+    {
         var demoItem = _demoRepository.GetDemoItemById(id);
 
         if (demoItem == null)
         {
-            throw new HttpRequestException("DemoItem with this ID Does not Exist");
+            _logger.LogError("DemoItem with this ID does not Exist");
+            throw new HttpRequestException("DemoItem with this ID does not Exist");
         }
 
-        return demoItem;
+        _demoRepository.DeleteDemoItemById(id);
     }
 }

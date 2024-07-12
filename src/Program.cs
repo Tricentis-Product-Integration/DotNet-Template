@@ -1,15 +1,19 @@
 using Microsoft.EntityFrameworkCore;
-using Tricentis.Rest_API_Template.Models;
+using Tricentis.RestApiTemplate.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
+// Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddDbContext<DemoContext>(opt =>
-    opt.UseInMemoryDatabase("DemoItems"));
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<DemoContext>(opt => opt.UseInMemoryDatabase("DemoItems"))
+                .AddEndpointsApiExplorer()
+                .AddSwaggerGen()
+                .AddScoped<IDemoRepository, DemoRepository>();
+
+builder.Logging.AddFilter("System", LogLevel.Information)
+               .AddFilter("Microsoft", LogLevel.Information)
+               .AddFilter("Microsoft", LogLevel.Information);
 
 var app = builder.Build();
 

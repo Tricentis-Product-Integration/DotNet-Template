@@ -1,59 +1,62 @@
-﻿namespace Tricentis.Rest_API_Template.Models;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Tricentis.RestApiTemplate.Models;
 
 public class DemoRepository : IDemoRepository
 {
 
     private readonly DemoContext _demoContext;
+    private DbSet<DemoItem> _items;
 
     public DemoRepository(DemoContext dataContext)
     {
         _demoContext = dataContext;
+        _items = _demoContext.DemoItems;
     }
 
     public bool AddDemoItem(DemoItem demoItem)
     {
-        if (_demoContext.DemoItems == null)
-            return false;
+        if (_items == null) { return false; }
 
-        if (_demoContext.DemoItems.Any(x => x.Id == demoItem.Id)) { return false; }
+        if (_items.Any(x => x.Id == demoItem.Id)) { return false; }
 
-        _demoContext.DemoItems.Add(demoItem);
+        _items.Add(demoItem);
         _demoContext.SaveChanges();
         return true;
     }
 
-    public bool DeleteDemoItem(DemoItem demoItem)
+    public bool DeleteDemoItemById(int id)
     {
-        if (_demoContext.DemoItems == null)
-            return false;
+        var item = GetDemoItemById(id);
 
-        if (!_demoContext.DemoItems.Any(x => x.Id == demoItem.Id)) { return false; }
+        if (_items == null) { return false; }
 
-        _demoContext.DemoItems.Remove(demoItem);
+        if (item == null) { return false; }
+
+        _items.Remove(item);
         _demoContext.SaveChanges();
         return true;
     }
 
     public DemoItem? GetDemoItemById(int id)
     {
-        if (_demoContext.DemoItems == null)
-            return null;
+        if (_items == null) { return null; }
 
-        return _demoContext.DemoItems.FirstOrDefault(x => x.Id == id);
+        return _items.FirstOrDefault(x => x.Id == id);
     }
 
-    public IList<DemoItem> GetDemoItems()
+    public IList<DemoItem>? GetDemoItems()
     {
-        if (_demoContext.DemoItems == null)
-            return new List<DemoItem>();
+        var items = _demoContext.DemoItems;
 
-        return _demoContext.DemoItems.ToList();
+        if (_items == null) { return null; }
+
+        return _items.ToList();
     }
 
     public bool UpdateDemoItem(DemoItem demoItem)
     {
-        if (_demoContext.DemoItems == null)
-            return false;
+        if (_demoContext.DemoItems == null) { return false; }
 
         if (!_demoContext.DemoItems.Any(x => x.Id == demoItem.Id)) { return false; }
 

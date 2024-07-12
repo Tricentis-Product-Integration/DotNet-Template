@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-namespace Tricentis.Rest_API_Template.Models;
+namespace Tricentis.RestApiTemplate.Models;
 
 public class DemoContext : DbContext
 {

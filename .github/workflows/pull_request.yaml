@@ -3,7 +3,7 @@ name: Pull Request Builder
 # Triggered by pull request to main branch
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
     branches:
       - main
 
@@ -19,8 +19,13 @@ jobs:
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
-          dotnet-quality: 'ga'
+          global-json-file: global.json
       
-      - name: Run tests with .NET
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build
+
+      - name: Test with the dotnet CLI
         run: dotnet test

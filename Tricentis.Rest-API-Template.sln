@@ -9,6 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tricentis.Rest-API-Template
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2B430346-804E-4B20-B62F-3B52970CFA9C}"
 	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
 		readme.md = readme.md
 		sonar-project.properties = sonar-project.properties
 	EndProjectSection
