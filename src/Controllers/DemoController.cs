@@ -5,43 +5,20 @@ namespace Tricentis.RestApiTemplate.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class DemoController : ControllerBase
+public class DemoController(IDemoRepository demoRepository) : ControllerBase
 {
-    private readonly IDemoRepository _demoRepository;
-    private readonly ILogger<DemoController> _logger;
-
-    public DemoController(IDemoRepository demoRepository, ILogger<DemoController> logger)
-    {
-        _demoRepository = demoRepository;
-        _logger = logger;
-    }
+    private readonly IDemoRepository _demoRepository = demoRepository ?? throw new HttpRequestException("DemoItems is empty or does not exist");
 
     [HttpGet(Name = "GetDemoValues")]
-    public IList<DemoItem> GetDemos() { 
-
-        IList<DemoItem>? items = _demoRepository.GetDemoItems();
-
-        if (items == null)
-        {
-            _logger.LogError("DemoItems is empty or does not exist");
-            throw new HttpRequestException("DemoItems is empty or does not exist");
-        }
-
-        return items;
+    public IList<DemoItem> GetDemos()
+    {
+        return _demoRepository.GetDemoItems();
     }
 
     [HttpGet("{id}")]
-    public DemoItem GetDemo(int id)
+    public DemoItem? GetDemo(int id)
     {
-        var demoItem = _demoRepository.GetDemoItemById(id);
-
-        if (demoItem == null)
-        {   
-           _logger.LogError("DemoItem with this ID does not Exist");
-            throw new HttpRequestException("DemoItem with this ID does not Exist");
-        }
-
-        return demoItem;
+        return _demoRepository.GetDemoItemById(id);
     }
 
     [HttpPost]
@@ -62,14 +39,6 @@ public class DemoController : ControllerBase
     [HttpDelete("{id}")]
     public void DeleteDemo(int id)
     {
-        var demoItem = _demoRepository.GetDemoItemById(id);
-
-        if (demoItem == null)
-        {
-            _logger.LogError("DemoItem with this ID does not Exist");
-            throw new HttpRequestException("DemoItem with this ID does not Exist");
-        }
-
         _demoRepository.DeleteDemoItemById(id);
     }
 }

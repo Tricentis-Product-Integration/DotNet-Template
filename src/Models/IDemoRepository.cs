@@ -2,7 +2,7 @@
 
 public interface IDemoRepository
 {
-    IList<DemoItem>? GetDemoItems();
+    IList<DemoItem> GetDemoItems();
     DemoItem? GetDemoItemById(int id);
     bool AddDemoItem(DemoItem demoItem);
     bool DeleteDemoItemById(int id);

@@ -1,26 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Tricentis.RestApiTemplate.Controllers;
 
 namespace Tricentis.RestApiTemplate.Models;
 
-public class DemoRepository : IDemoRepository
+public class DemoRepository(DemoContext dataContext, ILogger<DemoController> logger) : IDemoRepository
 {
 
-    private readonly DemoContext _demoContext;
-    private DbSet<DemoItem> _items;
-
-    public DemoRepository(DemoContext dataContext)
-    {
-        _demoContext = dataContext;
-        _items = _demoContext.DemoItems;
-    }
+    private readonly DemoContext _demoContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
+    private readonly ILogger<DemoController> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
     public bool AddDemoItem(DemoItem demoItem)
     {
-        if (_items == null) { return false; }
+        var items = _demoContext.DemoItems;
 
-        if (_items.Any(x => x.Id == demoItem.Id)) { return false; }
+        if (items.Any(x => x.Id == demoItem.Id)) {
+            _logger.LogWarning("Item with this Id already exists");
+            return false; 
+        }
 
-        _items.Add(demoItem);
+        items.Add(demoItem);
         _demoContext.SaveChanges();
         return true;
     }
@@ -28,39 +25,46 @@ public class DemoRepository : IDemoRepository
     public bool DeleteDemoItemById(int id)
     {
         var item = GetDemoItemById(id);
+        var items = _demoContext.DemoItems;
 
-        if (_items == null) { return false; }
+        if (item == null) {
+            return false; 
+        }
 
-        if (item == null) { return false; }
-
-        _items.Remove(item);
+        items.Remove(item);
         _demoContext.SaveChanges();
         return true;
     }
 
     public DemoItem? GetDemoItemById(int id)
     {
-        if (_items == null) { return null; }
+        var item = _demoContext.DemoItems.FirstOrDefault(x => x.Id == id);
 
-        return _items.FirstOrDefault(x => x.Id == id);
+        if (item != null)
+        {
+            return item;
+        }
+
+        _logger.LogWarning("Item with this ID does not exist");
+        return null;
     }
 
-    public IList<DemoItem>? GetDemoItems()
+    public IList<DemoItem> GetDemoItems()
     {
-        var items = _demoContext.DemoItems;
-
-        if (_items == null) { return null; }
-
-        return _items.ToList();
+        return _demoContext.DemoItems.ToArray();
     }
 
     public bool UpdateDemoItem(DemoItem demoItem)
     {
-        if (_demoContext.DemoItems == null) { return false; }
+        var items = _demoContext.DemoItems;
 
-        if (!_demoContext.DemoItems.Any(x => x.Id == demoItem.Id)) { return false; }
+        if (!items.Any(x => x.Id == demoItem.Id))
+        {
+            _logger.LogWarning("Item with this ID does not exist");
+            return false;
+        }
 
-        _demoContext.DemoItems.Update(demoItem);
+        items.Update(demoItem);
         _demoContext.SaveChanges();
         return true;
     }

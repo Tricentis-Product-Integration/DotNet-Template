@@ -1,6 +1,6 @@
 name: Release
 
-# Trigger on merge to main
+# Trigger on release published
 on:
   release:
     types: [published]
@@ -25,8 +25,8 @@ jobs:
         run: dotnet pack .\Tricentis.Rest-API-Template.sln
 
       - name: Upload Release Asset
-        uses: Shopify/upload-to-release@v1
+        uses: softprops/action-gh-release@v2
         with:
-          name: Rest-API.nupkg
-          path: .\src\bin\Release\Tricentis.Rest-API-Template.1.0.0.nupkg
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          files: .\src\bin\Release\Tricentis.RestAPI.Template.1.0.0.nupkg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
