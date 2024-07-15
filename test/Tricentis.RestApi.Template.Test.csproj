@@ -10,11 +10,11 @@
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.6" />
-	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-	<PackageReference Include="NUnit" Version="4.0.0" />
-	<PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
-	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.6" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="NUnit" Version="4.0.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<ProjectReference Include="..\src\Tricentis.RestAPI.Template.csproj" />
+    <ProjectReference Include="..\src\Tricentis.RestAPI.Template.csproj" />
   </ItemGroup>
 
 </Project>
