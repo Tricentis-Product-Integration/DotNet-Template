@@ -2,7 +2,7 @@
 
 
 ## Web App Included Packages
- - Swashbuckle 6.4.0
+ - Swashbuckle
  - Microsoft.EntityFrameworkCore.InMemeory
 
 
