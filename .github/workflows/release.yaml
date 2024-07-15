@@ -22,7 +22,7 @@ jobs:
           global-json-file: global.json
 
       - name: Package .NET Application
-        run: dotnet pack .\Tricentis.Rest-API-Template.sln
+        run: dotnet pack .\Tricentis.RestApi.Template.sln
 
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v2
