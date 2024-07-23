@@ -1,7 +1,7 @@
-﻿using Core;
-using Data;
+﻿using Core.Entities;
+using Data.Contexts;
 
-namespace Business;
+namespace Business.Services;
 
 public class DemoService(DemoContext dataContext) : IDemoService
 {

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-
-using Business;
-using Core;
+using Business.Services;
+using Core.Entities;
 
 
 namespace API;

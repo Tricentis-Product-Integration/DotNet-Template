@@ -1,6 +1,6 @@
-﻿using Core;
+﻿using Core.Entities;
 
-namespace Business;
+namespace Business.Services;
 
 public interface IDemoService
 {

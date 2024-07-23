@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Core.Entities;
 
-using Core;
-
-namespace Data;
+namespace Data.Contexts;
 
 public class DemoContext : DbContext
 {

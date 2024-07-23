@@ -1,4 +1,4 @@
-﻿namespace Core;
+﻿namespace Core.Entities;
 public class DemoItem
 {
     public int Id { get; set; }
