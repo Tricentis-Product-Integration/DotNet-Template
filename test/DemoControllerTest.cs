@@ -1,8 +1,8 @@
 using FluentAssertions;
 using Moq;
 
-using API;
-using Core;
+using API.Controllers;
+using Core.Entities;
 using Business.Services;
 
 

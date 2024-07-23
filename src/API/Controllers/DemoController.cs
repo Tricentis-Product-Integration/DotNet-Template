@@ -3,7 +3,7 @@ using Business.Services;
 using Core.Entities;
 
 
-namespace API;
+namespace API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
