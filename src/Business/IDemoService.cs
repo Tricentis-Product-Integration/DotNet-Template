@@ -1,6 +1,8 @@
-﻿namespace Tricentis.RestApiTemplate.Models;
+﻿using Core;
 
-public interface IDemoRepository
+namespace Business;
+
+public interface IDemoService
 {
     IList<DemoItem> GetDemoItems();
     DemoItem? GetDemoItemById(int id);

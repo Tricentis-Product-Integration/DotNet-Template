@@ -1,4 +1,4 @@
-﻿namespace Tricentis.RestApiTemplate.Models;
+﻿namespace Core;
 public class DemoItem
 {
     public int Id { get; set; }

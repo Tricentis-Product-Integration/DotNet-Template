@@ -1,20 +1,20 @@
-﻿using Tricentis.RestApiTemplate.Controllers;
+﻿using Core;
+using Data;
 
-namespace Tricentis.RestApiTemplate.Models;
+namespace Business;
 
-public class DemoRepository(DemoContext dataContext, ILogger<DemoController> logger) : IDemoRepository
+public class DemoService(DemoContext dataContext) : IDemoService
 {
 
     private readonly DemoContext _demoContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
-    private readonly ILogger<DemoController> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
     public bool AddDemoItem(DemoItem demoItem)
     {
         var items = _demoContext.DemoItems;
 
-        if (items.Any(x => x.Id == demoItem.Id)) {
-            _logger.LogWarning("Item with this Id already exists");
-            return false; 
+        if (items.Any(x => x.Id == demoItem.Id))
+        {
+            return false;
         }
 
         items.Add(demoItem);
@@ -27,8 +27,9 @@ public class DemoRepository(DemoContext dataContext, ILogger<DemoController> log
         var item = GetDemoItemById(id);
         var items = _demoContext.DemoItems;
 
-        if (item == null) {
-            return false; 
+        if (item == null)
+        {
+            return false;
         }
 
         items.Remove(item);
@@ -45,7 +46,6 @@ public class DemoRepository(DemoContext dataContext, ILogger<DemoController> log
             return item;
         }
 
-        _logger.LogWarning("Item with this ID does not exist");
         return null;
     }
 
@@ -60,7 +60,6 @@ public class DemoRepository(DemoContext dataContext, ILogger<DemoController> log
 
         if (!items.Any(x => x.Id == demoItem.Id))
         {
-            _logger.LogWarning("Item with this ID does not exist");
             return false;
         }
 

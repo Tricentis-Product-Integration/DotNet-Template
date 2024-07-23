@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Tricentis.RestApiTemplate.Models;
+
+using Business;
+using Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,13 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddDbContext<DemoContext>(opt => opt.UseInMemoryDatabase("DemoItems"))
-                .AddEndpointsApiExplorer()
-                .AddSwaggerGen()
-                .AddScoped<IDemoRepository, DemoRepository>();
+    .AddEndpointsApiExplorer()
+    .AddSwaggerGen()
+    .AddScoped<IDemoService, DemoService>();
 
 builder.Logging.AddFilter("System", LogLevel.Information)
-               .AddFilter("Microsoft", LogLevel.Information)
-               .AddFilter("Microsoft", LogLevel.Information);
+    .AddFilter("Microsoft", LogLevel.Information)
+    .AddFilter("Microsoft", LogLevel.Information);
 
 var app = builder.Build();
 
