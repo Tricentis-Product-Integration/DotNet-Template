@@ -22,11 +22,11 @@ jobs:
           global-json-file: global.json
 
       - name: Package .NET Application
-        run: dotnet pack .\Tricentis.RestApi.Template.sln
+        run: dotnet pack ./Tricentis.RestApi.Template.sln
 
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v2
         with:
-          files: .\src\bin\Release\Tricentis.RestAPI.Template.1.0.0.nupkg
+          files: ./src/bin/Release/Tricentis.RestAPI.Template.1.0.0.nupkg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
