@@ -1,20 +1,26 @@
-using Microsoft.EntityFrameworkCore;
-using Business.Services;
-using Data.Contexts;
+using DAL;
+using Business;
+using Services.Middlewares;
+using Instrumentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddDbContext<DemoContext>(opt => opt.UseInMemoryDatabase("DemoItems"))
-    .AddEndpointsApiExplorer()
+builder.Services.AddEndpointsApiExplorer()
     .AddSwaggerGen()
-    .AddScoped<IDemoService, DemoService>();
+    .AddCors()
+    .AddHttpContextAccessor()
+    .AddBusinessServices()
+    .AddInstrumentation()
+    .AddDALServices();
+
 
 builder.Logging.AddFilter("System", LogLevel.Information)
     .AddFilter("Microsoft", LogLevel.Information)
     .AddFilter("Microsoft", LogLevel.Information);
+
 
 var app = builder.Build();
 
@@ -24,6 +30,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
+
+app.AddMiddlewares();
 
 app.UseHttpsRedirection();
 

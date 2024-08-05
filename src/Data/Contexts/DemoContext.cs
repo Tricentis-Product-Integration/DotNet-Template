@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 
-namespace Data.Contexts;
+namespace DAL.Contexts;
 
 public class DemoContext : DbContext
 {

@@ -1,12 +1,13 @@
 ﻿using Core.Entities;
-using Data.Contexts;
+using DAL.Contexts;
+using Microsoft.Extensions.Logging;
 
 namespace Business.Services;
 
-public class DemoService(DemoContext dataContext) : IDemoService
+public class DemoService(DemoContext dataContext, ILogger<DemoService> logger) : IDemoService
 {
-
     private readonly DemoContext _demoContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
+    private readonly ILogger<DemoService> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
     public bool AddDemoItem(DemoItem demoItem)
     {
@@ -14,6 +15,7 @@ public class DemoService(DemoContext dataContext) : IDemoService
 
         if (items.Any(x => x.Id == demoItem.Id))
         {
+            _logger.LogWarning("Item " + demoItem.Id + " already exists");
             return false;
         }
 
@@ -43,14 +45,17 @@ public class DemoService(DemoContext dataContext) : IDemoService
 
         if (item != null)
         {
+            _logger.LogInformation("Item " + id + " retrieved successfully");
             return item;
         }
 
+        _logger.LogWarning("Item " + id + " does not exist");
         return null;
     }
 
     public IList<DemoItem> GetDemoItems()
     {
+        _logger.LogInformation("Items retrieved successfully");
         return _demoContext.DemoItems.ToArray();
     }
 
@@ -60,6 +65,7 @@ public class DemoService(DemoContext dataContext) : IDemoService
 
         if (!items.Any(x => x.Id == demoItem.Id))
         {
+            _logger.LogWarning("Item " + demoItem.Id + " does not exist");
             return false;
         }
 
