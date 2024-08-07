@@ -11,11 +11,12 @@ public class DemoService(DemoContext dataContext, ILogger<DemoService> logger) :
 
     public bool AddDemoItem(DemoItem demoItem)
     {
+        _logger.LogInformation("Adding Item to Database");
         var items = _demoContext.DemoItems;
 
         if (items.Any(x => x.Id == demoItem.Id))
         {
-            _logger.LogWarning("Item " + demoItem.Id + " already exists");
+            _logger.LogError("Item " + demoItem.Id + " already exists");
             return false;
         }
 
@@ -41,6 +42,7 @@ public class DemoService(DemoContext dataContext, ILogger<DemoService> logger) :
 
     public DemoItem? GetDemoItemById(int id)
     {
+        _logger.LogInformation("Retrieving Item " + id + " from Database");
         var item = _demoContext.DemoItems.FirstOrDefault(x => x.Id == id);
 
         if (item != null)
@@ -49,23 +51,24 @@ public class DemoService(DemoContext dataContext, ILogger<DemoService> logger) :
             return item;
         }
 
-        _logger.LogWarning("Item " + id + " does not exist");
+        _logger.LogError("Item " + id + " does not exist");
         return null;
     }
 
     public IList<DemoItem> GetDemoItems()
     {
-        _logger.LogInformation("Items retrieved successfully");
+        _logger.LogInformation("Retrieving Items from Database");
         return _demoContext.DemoItems.ToArray();
     }
 
     public bool UpdateDemoItem(DemoItem demoItem)
     {
+        _logger.LogInformation("Retrieving Item " + demoItem.Id + "from Database");
         var items = _demoContext.DemoItems;
 
         if (!items.Any(x => x.Id == demoItem.Id))
         {
-            _logger.LogWarning("Item " + demoItem.Id + " does not exist");
+            _logger.LogError("Item " + demoItem.Id + " does not exist");
             return false;
         }
 

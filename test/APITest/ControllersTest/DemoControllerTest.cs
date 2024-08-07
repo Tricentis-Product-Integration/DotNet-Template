@@ -4,6 +4,7 @@ using Moq;
 using API.Controllers;
 using Core.Entities;
 using Business.Services;
+using Microsoft.Extensions.Logging;
 
 
 namespace APITest.ControllersTest;
@@ -12,6 +13,7 @@ namespace APITest.ControllersTest;
 public class DemoControllerTest
 {
     private readonly Mock<IDemoService> _demoServiceMock = new ();
+    private readonly ILogger<DemoController> _logger = new Logger<DemoController>(new LoggerFactory());
 
     [SetUp]
     public void SetUp()
@@ -27,7 +29,7 @@ public class DemoControllerTest
     [TestCase(2, "Test2")]
     public void Test_GetItemByID_Pass1(int id, string expectedValue)
     {
-        var controller = new DemoController(_demoServiceMock.Object);
+        var controller = new DemoController(_demoServiceMock.Object, _logger);
 
         var demo = controller.GetDemo(id)!;
         demo.DemoValue.Should().Be(expectedValue);
@@ -36,7 +38,7 @@ public class DemoControllerTest
     [TestCase(0)]
     public void Test_GetItemByID_NoIDFound(int id)
     {
-        var controller = new DemoController(_demoServiceMock.Object);
+        var controller = new DemoController(_demoServiceMock.Object, _logger);
 
         controller.GetDemo(id).Should().BeNull();
     }
@@ -44,7 +46,7 @@ public class DemoControllerTest
     [Test]
     public void Test_GetItems_IsNotNull_Pass()
     {
-        var controller = new DemoController(_demoServiceMock.Object);
+        var controller = new DemoController(_demoServiceMock.Object, _logger);
 
         controller.GetDemos().Should().NotBeNull();
     }
