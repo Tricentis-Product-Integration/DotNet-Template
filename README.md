@@ -4,6 +4,7 @@
 ## Web App Included Packages
  - Swashbuckle
  - Microsoft.EntityFrameworkCore.InMemeory
+ - OpenTelemetry
 
 
 
