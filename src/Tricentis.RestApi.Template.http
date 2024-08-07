@@ -1,6 +1,0 @@
-@Tricentis.Rest_API_Template_HostAddress = http://localhost:5181
-
-GET {{Tricentis.Rest_API_Template_HostAddress}}/demoproject/
-Accept: application/json
-
-###
